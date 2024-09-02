@@ -1,0 +1,190 @@
+<section
+  id="referral"
+  ng-controller="ReferralCtrl">
+  <div class="body-section setting-section">
+    <h4 class="section-name">List of referrals</h4>
+
+    <div class="section-content">
+      <div
+        class="card referral-setting-card"
+        ng-if="!!referral.isManagement">
+        <div class="card-body">
+          <p class="link-explanation">
+            This section generates referral links for our portal users. At present it can generate job referral ,social
+            and plain text links.
+          </p>
+
+          <div>
+            <div class="setting-btn">
+              <button
+                type="button"
+                class="btn btn-danger"
+                ng-click="openNewReferralLinkModal()">
+                Generate Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="referral-link-list">
+        <div class="row">
+          <div
+            class="col-12 col-md-6"
+            ng-repeat="referral in referral.links track by referral.id">
+            <div
+              ba-panel
+              ba-panel-class="xsmall-panel light-text referral-link-panel">
+              <div class="d-flex">
+                <div class="info-col flex-fill">
+                  <div
+                    class="context-name">
+                    <span ng-if="referral.referralTargetSubject.length">{{referral.referralTargetSubject}}</span>
+                    <span ng-if="!referral.referralTargetSubject.length">-</span>
+                  </div>
+                  <div
+                    class="referral-type"
+                    ng-if="referral.referralType === REFERRAL_TYPE.TEXT_LINK">
+                    Text
+                  </div>
+                  <div
+                    class="referral-type"
+                    ng-if="referral.referralType === REFERRAL_TYPE.JOB_SPEC">
+                    Job Spec
+                  </div>
+                  <div
+                    class="referral-type"
+                    ng-if="referral.referralType === REFERRAL_TYPE.SOCIAL_SHARE">
+                    Social Share
+                  </div>
+                    <div
+                      class="referral-type"
+                      ng-if="referral.referralType === REFERRAL_TYPE.CV_BOX">
+                      Cv Box
+                    </div>
+                </div>
+
+                <div
+                  class="ref-stt"
+                  ng-if="!!referral.parentReferralId">
+                  <div class="badge badge-warning">Child Ref</div>
+                </div>
+              </div>
+
+              <br/>
+
+              <div class="link">
+                <a
+                  ng-href="{{ getReferralLink(referral) }}"
+                  target="_blank">{{ getReferralLink(referral) }}
+                </a>
+              </div>
+
+              <div class="list-status">
+                <div class="ref-status" ng-if="referral.referralType !== REFERRAL_TYPE.TEXT_LINK && referral.referralType !== REFERRAL_TYPE.CV_BOX">
+                  <span ng-class="['status-color', referral.bountyEnable ? 'enabled' : '' ]"></span>
+                  <span style="vertical-align: middle">{{ referral.bountyEnable ? "Bounty enabled" : "Bounty disabled" }}</span>
+                </div>
+                <div class="ref-status">
+                  <span ng-class="['status-color', (referral.refPublic || referral.referralType !== REFERRAL_TYPE.JOB_SPEC) ? 'enabled' : '' ]"></span>
+                  <span style="vertical-align: middle">{{ (referral.refPublic || referral.referralType !== REFERRAL_TYPE.JOB_SPEC) ? "Published" : "Not published" }}</span>
+                </div>
+              </div>
+
+              <br/>
+
+              <div class="ctrls">
+                <div class="ctrls-container d-flex align-items-center">
+                  <a
+                    ng-if="!referral.parentReferralId"
+                    ng-click="openNewReferralLinkModal(referral)"
+                    title="Edit referral">
+                    <i class="fas fa-edit"></i>
+                  </a>
+
+                  <a
+                    href="#"
+                    title="Copy"
+                    ng-click="copyLink(referral)">
+                    <i class="fas fa-copy"></i>
+                  </a>
+
+                  <a
+                    class="trash-ctrl"
+                    href="#"
+                    title="Delete"
+                    ng-click="openDeleteReferralLinkModal(referral.referralLink, $index)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="menu-ctrl">
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-secondary dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a
+                      ng-href="{{getResumesLink(referral.referralType, referral.referralLink, referral.parentReferralId)}}"
+                      class="dropdown-item"
+                      href="#">
+                      {{ referral.referralType !== REFERRAL_TYPE.SOCIAL_SHARE ? "Referred resumes" : "Applications" }}
+                    </a>
+                    <a
+                      ng-if="referral.referralType === REFERRAL_TYPE.JOB_SPEC"
+                      ng-href="{{getResumesLink(referral.referralType, referral.referralLink, referral.parentReferralId) + '&type=matching'}}"
+                      class="dropdown-item"
+                      href="#">
+                      Matching resumes
+                    </a>
+                    <a
+                      ng-click="scanResumeFolder(referral.id)"
+                      ng-if="referral.referralType === REFERRAL_TYPE.JOB_SPEC && scanUserId > 0"
+                      class="dropdown-item"
+                      href="#">
+                      Scanning folder
+                    </a>
+                    <a
+                            ng-click="scanResumeMultipleFolder(referral.id)"
+                            ng-if="referral.referralType === REFERRAL_TYPE.JOB_SPEC && scanUserId > 0 && !isRecruiter"
+                            class="dropdown-item"
+                            href="#">
+                      Scanning Multiple Bulk folder
+                    </a>
+                    <a
+                      ng-click="openUpdateSkillModal(referral.id, referral.referralLink)"
+                      ng-if="referral.referralType === REFERRAL_TYPE.JOB_SPEC"
+                      class="dropdown-item"
+                      href="#">
+                      Categorize Skill
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+          ng-if="!referral.listing && referral.hasNext">
+          <div
+            class="col-12">
+            <div class="text-center">
+              <button
+                ng-click="loadNextPage()"
+                class="btn btn-primary">
+                Load More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

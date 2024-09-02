@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyCvTracker">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52786419-3">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-52786419-3');
+</script><head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My CV Tracker</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+	 crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/homepage/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/homepage/favicon.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/homepage/favicon.ico">
+
+  <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css({.tmp/serve,src}) styles/app.css -->
+  <!-- inject:css -->
+  <!-- css files will be automatically insert here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
+    <!-- Hotjar Tracking Code for www.mycvtracker.com -->
+    <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1795044,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+</head>
+<body>
+<div class="body-bg"></div>
+<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+
+  <ba-sidebar ng-if="$isAuthenticated"></ba-sidebar>
+  <page-top></page-top>
+
+  <div class="loading" data-loading ng-if="$rootScope.$state.current.name != 'notes'">Loading&#8230;</div>
+
+  <div class="al-main">
+    <div class="al-content">
+      <content-top  ng-if="$isAuthenticated"></content-top>
+      <div ui-view autoscroll="true" autoscroll-body-top></div>
+    </div>
+  </div>
+
+  <!-- <footer class="al-footer clearfix">
+    <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
+    <div class="al-footer-main clearfix">
+      <div class="al-copy">MyCVTracker 2017</div>
+      <ul class="al-share clearfix">
+        <li><i class="socicon socicon-facebook"></i></li>
+        <li><i class="socicon socicon-twitter"></i></li>
+        <li><i class="socicon socicon-google"></i></li>
+        <li><i class="socicon socicon-linkedin"></i></li>
+      </ul>
+    </div>
+  </footer> -->
+
+  <!-- footer starts -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-12">
+          <img src="assets/img/front/logo.png" width="150px">
+          <p></p>
+          <a href="/terms.html" target="_blank">Terms & Conditions</a>
+					<p>Uxbridge, London, United Kingdom</p>
+					<p class="copyright">Copyright My CV Tracker</p>
+					<ul class="footer-social">
+						<li><a href=""><span><i class="fab fa-facebook-f"></i></span></a></li>
+						<li><a href=""><span><i class="fab fa-twitter"></i></span></a></li>
+						<li><a href=""><span><i class="fab fa-instagram"></i></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- footer ends -->
+
+  <back-top></back-top>
+</main>
+
+<div id="preloader" ng-show="!$pageFinishedLoading">
+  <div></div>
+</div>
+<!-- build:js(src) scripts/vendor.js -->
+<!-- bower:js -->
+<!-- run `gulp inject` to automatically populate bower script dependencies -->
+<!-- endbower -->
+<!-- endbuild -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.7.3/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng.ckeditor/2.0.4/ng-ckeditor.min.js"></script>
+<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+<!-- inject:js -->
+<!-- js files will be automatically insert here -->
+<!-- endinject -->
+
+<!-- inject:partials -->
+<!-- angular templates will be automatically converted in js and inserted here -->
+<!-- endinject -->
+<!-- endbuild -->
+
+</body>
+</html>

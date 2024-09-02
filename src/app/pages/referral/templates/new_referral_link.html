@@ -1,0 +1,201 @@
+<form
+  id="new-referral-form"
+  name="newReferralLinkForm"
+  ng-submit="generateLink()"
+  novalidate>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      ng-click="closeModal()">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+    <h4
+      class="modal-title"
+      ng-if="!newReferralForm.editing">Generate Referral Link</h4>
+    <h4
+      class="modal-title"
+      ng-if="newReferralForm.editing">Edit Referral Link</h4>
+  </div>
+  <div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="control-label">Referral Type</label>
+        <select
+          ng-disabled="newReferralForm.editing"
+          ng-model="newReferralForm.type"
+          ng-change="newReferralTypeChanged()"
+          class="form-control">
+          <option ng-value="REFERRAL_TYPE.JOB_SPEC">Job</option>
+          <option ng-value="REFERRAL_TYPE.TEXT_LINK" ng-if="referral.isAdmin">Text Link</option>
+          <option ng-value="REFERRAL_TYPE.SOCIAL_SHARE" ng-if="referral.isAdmin">Social</option>
+          <option ng-value="REFERRAL_TYPE.CV_BOX">Cv Box</option>
+        </select>
+      </div>
+      <!--      <div class="form-group" ng-if="newReferralForm.type === REFERRAL_TYPE.TEXT_LINK">-->
+      <!--        <label class="control-label">Referral Context</label>-->
+      <!--        <input-->
+      <!--          type="text"-->
+      <!--          class="form-control"-->
+      <!--          placeholder="Enter context name"-->
+      <!--          ng-model="newReferralForm.description"-->
+      <!--          ng-required="true" />-->
+      <!--      </div>-->
+      <div class="form-group">
+        <label class="control-label">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter title"
+          name="title"
+          ng-model="newReferralForm.title"
+          ng-required="true" />
+      </div>
+      <div
+        class="form-group"
+        ng-if="newReferralForm.type === REFERRAL_TYPE.JOB_SPEC">
+        <label class="control-label">Email</label>
+        <input
+          ng-disabled="newReferralForm.editing"
+          type="text"
+          class="form-control"
+          placeholder="Enter email"
+          name="email"
+          ng-model="newReferralForm.email"
+          ng-required="true" />
+      </div>
+      <div
+        class="form-group"
+        ng-if="newReferralForm.type === REFERRAL_TYPE.JOB_SPEC">
+        <label class="control-label">Job type</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Fulltime, partime, remote, ..."
+          ng-model="newReferralForm.jobType"
+          name="jobType"
+          ng-required="true" />
+      </div>
+      <div
+        class="form-group"
+        ng-if="newReferralForm.type === REFERRAL_TYPE.JOB_SPEC">
+        <label class="control-label">Location</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter location"
+          ng-model="newReferralForm.location"
+          name="location"
+          ng-required="true" />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Description</label>
+        <ng-ckeditor
+          ng-model="newReferralForm.description"
+          remove-plugins="iframe,flash,smiley">
+        </ng-ckeditor>
+      </div>
+      <div class="form-group" ng-if="newReferralForm.type !== REFERRAL_TYPE.CV_BOX">
+        <div class="form-check form-check-inline">
+          <input
+            ng-model="newReferralForm.previewType"
+            class="form-check-input"
+            type="radio"
+            name="previewType"
+            ng-value="PREVIEW_TYPE.WEB_PAGE_URL">
+          <label
+            class="form-check-label">
+            Profile webpage
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            ng-model="newReferralForm.previewType"
+            class="form-check-input"
+            type="radio"
+            name="previewType"
+            ng-value="PREVIEW_TYPE.FILE">
+          <label
+            class="form-check-label">Profile file
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            ng-model="newReferralForm.previewType"
+            class="form-check-input"
+            type="radio"
+            name="previewType"
+            ng-value="PREVIEW_TYPE.NONE">
+          <label
+            class="form-check-label">No profile
+          </label>
+        </div>
+      </div>
+      <div class="form-group" ng-if="newReferralForm.previewType === PREVIEW_TYPE.WEB_PAGE_URL">
+        <label
+          class="control-label">Enter link
+        </label>
+        <input
+          ng-required="true"
+          type="text"
+          class="form-control"
+          ng-maxlength="250"
+          name="previewLink"
+          placeholder="Enter link"
+          ng-model="newReferralForm.previewLink" />
+        <div
+          class="text-danger error-row"
+          ng-if="newReferralForm.previewLinkInvalid">
+          Link is invalid
+        </div>
+      </div>
+      <div class="form-group" ng-if="newReferralForm.previewType === PREVIEW_TYPE.FILE">
+        <label
+          class="control-label">Select your file
+        </label>
+        <input type="file" class="form-control" placeholder="Upload file" preview-file-model="newReferralForm.previewFile"  accept=".pdf,.jpg,.png" id="fileUpload"/>
+        <div
+          class="text-danger error-row"
+          ng-if="newReferralForm.previewFileInvalidSize">
+          File size must be less than 5mb
+        </div>
+        <div
+          class="text-danger error-row"
+          ng-if="newReferralForm.previewFileInvalidType">
+          File is required and allow only pdf, jpeg, png.
+        </div>
+      </div>
+      <div
+        ng-if="newReferralForm.type !== REFERRAL_TYPE.TEXT_LINK && newReferralForm.type !== REFERRAL_TYPE.CV_BOX"
+        class="row">
+        <div class="form-group col-xs-6">
+          <input
+            type="checkbox"
+            ng-model="newReferralForm.bountyEnable" />
+          <label class="form-check-label">Bounty enabled</label>
+        </div>
+        <div
+          class="form-group col-xs-6"
+          ng-if="newReferralForm.type === REFERRAL_TYPE.JOB_SPEC">
+          <input
+            type="checkbox"
+            ng-model="newReferralForm.refPublic" />
+          <label class="form-check-label">Listing published</label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer clearfix"
+      ng-if="!newReferralForm.isChildRef">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        ng-disabled="newReferralLinkForm.$invalid || newReferralForm.generating">
+        <span ng-if="!newReferralForm.generating">{{ !newReferralForm.editing ? "Generate" : "Edit" }}</span>
+        <span ng-if="newReferralForm.generating">{{ !newReferralForm.editing ? "Generating" : "Editing" }}</span>
+      </button>
+    </div>
+  </div>
+</form>

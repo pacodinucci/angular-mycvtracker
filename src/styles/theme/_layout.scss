@@ -1,0 +1,380 @@
+$left-space: 227px;
+
+@include scrollbars(.5em, #d9d9d9, rgba(0,0,0,0));
+
+html {
+  position: relative;
+  min-width: 320px;
+}
+
+html, body {
+  min-height: 100%;
+  min-width: $resMin;
+}
+
+body {
+  font: 14px/16px museo700;
+  color: $default-text;
+  background: linear-gradient(to top, #e0eafc, #cfdef3);
+  &.blur-theme {
+    @include main-background();
+  }
+}
+@font-face {
+    font-family: 'museo700';
+    src: url('../assets/fonts/museo_700-webfont.woff2') format('woff2'),
+         url('../assets/fonts/museo_700-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'museo_slab500';
+    src: url('../assets/fonts/museo_slab_500.woff2') format('woff2'),
+         url('../assets/fonts/museo_slab_500.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1,h2,h3,h4,h5,h6{
+	margin: 0px;
+	padding: 0px;
+	font-family: 'museo700';
+}
+p{
+	margin: 0px;
+	padding: 0px;
+	font-family: 'museo_slab500';
+	font-size: 14px;
+}
+ul{
+	list-style-type: none;
+	padding: 0px;
+}
+a{
+	text-decoration: none;
+	font-family: 'museo_slab500';
+}
+//body.mobile{
+//  background: none;
+//  .body-bg{
+//    display: block;
+//    position: fixed;
+//    top: 0;
+//    left: 0;
+//    bottom: 0;
+//    right: 0;
+//    background-attachment: inherit;
+//    background-color: $body-bg;
+//  }
+//  &.blur-theme .body-bg{
+//    @include main-background();
+//  }
+//}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
+{
+  html{
+    overflow: hidden;
+    height: 100%;
+  }
+  body{
+    overflow: auto;
+    height: 100%;
+  }
+}
+
+a {
+  transition: color 0.5s ease;
+  outline: 0 !important;
+}
+
+.body-bg{
+  display: none;
+}
+.al-header {
+  display: block;
+  height: 49px;
+  margin: 0;
+  background-repeat: repeat-x;
+  position: relative;
+  z-index: 905;
+  color: #444444;
+}
+
+.al-main {
+  //margin-left: $left-space !important;
+  padding: 90px 0 34px 0;
+  min-height: 500px;
+}
+
+@media only screen and (min-width: 937px) {
+	.al-main {
+	    margin-left: $left-space !important;
+	}
+}
+
+.al-footer {
+  height: 34px;
+  padding: 0px 18px 0 $left-space;
+  width: 100%;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  font-size: 13px;
+  color: $default-text;
+  transition: padding-left 0.5s ease;
+}
+
+.al-footer-main {
+  float: left;
+  margin-left: 15px;
+}
+
+.al-copy {
+  float: left;
+}
+
+.al-footer-right {
+  float: right;
+  margin-right: 12px;
+  i {
+    margin: 0 4px;
+    color: $danger;
+    font-size: 12px;
+  }
+  a {
+    margin-left: 4px;
+    color: $default-text;
+    &:hover {
+      color: $danger;
+    }
+  }
+}
+
+.al-share {
+  margin: -6px 0 0 0;
+  padding: 0;
+  list-style: none;
+  float: left;
+
+  li {
+    list-style: none;
+    float: left;
+    margin: 0 8px;
+    i {
+      cursor: pointer;
+      transition: all 0.1s ease;
+      color: white;
+      padding: 6px;
+      box-sizing: content-box;
+      font-size: 16px;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+    i.fa-facebook-square {
+      color: $facebook-color;
+    }
+    i.fa-twitter-square {
+      color: $twitter-color;
+    }
+    i.fa-google-plus-square {
+      color: $google-color;
+    }
+  }
+
+  @media (min-width: $resXXS) {
+    margin-left: 12px;
+  }
+}
+
+.al-content {
+  padding: 8px 32px 8px 40px;
+}
+
+@media screen and (max-width: $resXS) {
+  .al-content {
+    padding: 8px 20px;
+  }
+}
+
+.vis-hidden {
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.icon-up, .icon-down {
+  width: 5px;
+  height: 13px;
+  display: block;
+}
+
+.icon-up {
+  @include bg-nr('arrow-green-up.svg');
+}
+
+.icon-down {
+  @include bg-nr('arrow-red-down.svg');
+}
+
+.disable-text-selection {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.align-right {
+  text-align: right
+}
+
+.amcharts-chart-div > a {
+  font-size: 6px !important;
+}
+
+.content-panel {
+  padding-left: 22px;
+  padding-top: 26px;
+}
+
+@media (max-width: 590px) {
+  .al-footer-right {
+    float: none;
+    margin-bottom: 19px;
+    margin-right: 0;
+  }
+  .al-footer {
+    height: 76px;
+    text-align: center;
+  }
+  .al-main {
+    padding-bottom: 76px;
+  }
+  .al-footer-main {
+    float: none;
+    display: inline-block;
+  }
+}
+
+.full-invisible {
+  visibility: hidden!important;
+  * {
+    visibility: hidden!important;
+  }
+}
+
+.irs-grid-text {
+  color: $default-text;
+}
+.footer {
+    width: 100%;
+    min-height: 50px;
+    padding: 50px 0px 20px 0px;
+    background: #1e222c;
+    text-align: center;
+}
+.footer img{
+	margin-bottom: 10px;
+}
+.footer p{
+	color: #fff;
+	margin: 5px 0px;
+}
+.footer .copyright{
+	color: #9099ad;
+}
+.footer-social{
+	margin-top: 20px;
+  padding: 0;
+}
+.footer-social li{
+	display: inline-block;
+	margin: 0px 10px;
+}
+.footer-social li a{
+	color: #9099ad;
+}
+.footer-social li a:hover{
+	color: #489dc4;
+}
+
+#loginForm input[type=text], #loginForm input[type=email], #loginForm button[type=submit], #loginForm textarea,
+#registerForm input[type=text], #registerForm input[type=email], #registerForm button[type=submit] {
+  font-family: 'museo_slab500';
+  font-size: 14px;
+}
+header {
+    width: 100%;
+    background: #1e222c;
+    min-height: 50px;
+    padding: 15px 0px;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .main-img {
+    min-height: 300px;
+    padding: 50px 0px; }
+}
+
+@media only screen and (max-width: 767px) {
+  .logo {
+    text-align: center;
+  }
+}
+
+hr.resumeSeprator{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  border-top: 1px solid #eee;
+
+}
+h3.resume-title,h3.resume-name{
+  font-size: 15px;
+
+}
+
+div.file-upload-error{
+  color: red;
+  text-align: center;
+}
+span.file-size {
+  color: #9099ad;
+  font-size: 9px;
+}
+
+
+// @font-face {
+//     font-family: "Font Awesome 5 Brands";
+//     font-style: normal;
+//     font-weight: normal;
+//     font-display:auto;src: url(../webfonts/fa-brands-400.eot);
+//     src: url(../webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"),url(../webfonts/fa-brands-400.woff2) format("woff2"),url(../webfonts/fa-brands-400.woff) format("woff"),url(../webfonts/fa-brands-400.ttf) format("truetype"),url(../webfonts/fa-brands-400.svg#fontawesome) format("svg")
+// }
+//
+// .fab {
+//     font-family: "Font Awesome 5 Brands"
+// }
+//
+// .fa-facebook-f:before, .fa-facebook:before {
+//     content: "\f09a";
+// }
+// .fa, .fab, .fal, .far, .fas {
+//     -moz-osx-font-smoothing: grayscale;
+//     -webkit-font-smoothing: antialiased;
+//     display: inline-block;
+//     font-style: normal;
+//     font-variant: normal;
+//     text-rendering: auto;
+//     line-height: 1;
+// }
+//
+// .fa-twitter:before {
+//     content: "\f099";
+// }
+// .fa-facebook-f:before, .fa-facebook:before {
+//     content: "\f09a";
+// }
